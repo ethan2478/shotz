@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/editor" },
+    { "path": "./packages/screenshot" },
+    { "path": "./packages/shared" }
+  ]
+}

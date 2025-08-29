@@ -1,0 +1,69 @@
+{
+  "name": "@shotz/editor",
+  "version": "0.0.1",
+  "description": "A lightweight React image editor supporting crop, draw, text, mosaic, shapes, and download.",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js",
+      "default": "./dist/index.cjs.js"
+    },
+    "./index.css": "./dist/index.css"
+  },
+  "scripts": {
+    "start": "vite",
+    "dev": "tsc --watch",
+    "build": "pnpm run clean && pnpm run build:vite",
+    "build:tsc": "tsc -p tsconfig.build.json",
+    "build:vite": "vite build",
+    "preview": "vite preview",
+    "clean": "rimraf dist"
+  },
+  "keywords": [
+    "shotz",
+    "react",
+    "image",
+    "editor",
+    "cropper"
+  ],
+  "author": "Ethan",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=17",
+    "react-dom": ">=17"
+  },
+  "packageManager": "pnpm@10.9.0",
+  "dependencies": {
+    "@shotz/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.0.2",
+    "less": "^4.4.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "publishConfig": {
+    "registry": "https://www.npmjs.com/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethan2478/shotz"
+  },
+  "bugs": {
+    "url": "https://github.com/ethan2478/shotz/issues"
+  },
+  "homepage": "https://github.com/ethan2478/shotz"
+}

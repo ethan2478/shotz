@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "dist",
+    "rootDir": "src",
+    "noEmit": true,
+    "composite": true // 必须开启，才能作为 Project References 的子项目
+  },
+  "include": ["src", "../../global.d.ts"],
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ]
+}

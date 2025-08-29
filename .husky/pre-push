@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# ANSI 颜色定义
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+BLUE="\033[0;34m"
+RESET="\033[0m"
+
+echo "🔍 Checking changeset status..."
+
+# 检查 changeset
+if pnpm changeset status --since=origin/master >/dev/null 2>&1; then
+  echo "${GREEN}✅ Changeset detected. Good job!${RESET}"
+else
+  echo "${YELLOW}⚠️  No changesets found! If you want to publish, please run 'pnpm run changeset' to add one.${RESET}"
+fi
+
+# 统计文件改动和commits数据
+echo ""
+echo "📊 Commit Summary:"
+
+# 获取推送的 commit 范围
+COMMITS=$(git rev-list origin/master..HEAD)
+
+if [ -z "$COMMITS" ]; then
+  echo "${YELLOW}⚠️  No new commits to push.${RESET}"
+else
+  COUNT=$(echo "$COMMITS" | wc -l | tr -d ' ')
+  FILES=$(git diff --name-only origin/master..HEAD | wc -l | tr -d ' ')
+  AUTHOR=$(git log -1 --pretty=format:'%an')
+
+  echo "${BLUE}👤 Author: $AUTHOR${RESET}"
+  echo "${BLUE}📦 Commits: $COUNT${RESET}"
+  echo "${BLUE}📂 Changed Files: $FILES${RESET}"
+  echo "${BLUE}📝 Latest Commit Message:${RESET}"
+  git --no-pager log origin/master..HEAD --pretty=format:"- %s" --abbrev-commit -n 1
+fi
+
+echo ""
+printf "%b\n" "──────────────────────────────"
+echo ""

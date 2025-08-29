@@ -1,0 +1,27 @@
+{
+  "name": "@shotz/image-editor-demo",
+  "version": "1.0.0",
+  "description": "A demo for @shotz/editor",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "vite"
+  },
+  "author": "Ethan",
+  "license": "MIT",
+  "packageManager": "pnpm@10.9.0",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "@shotz/editor": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.0.2",
+    "less": "^4.4.1",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.5",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
