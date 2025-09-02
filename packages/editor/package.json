@@ -24,7 +24,7 @@
     "build": "pnpm run clean && pnpm run build:vite",
     "build:tsc": "tsc -p tsconfig.build.json",
     "build:vite": "vite build",
-    "publish": "pnpm publish --access public",
+    "release": "pnpm publish --access public",
     "preview": "vite preview",
     "clean": "rimraf dist"
   },
@@ -54,7 +54,7 @@
     "vite-plugin-dts": "^4.5.4"
   },
   "publishConfig": {
-    "registry": "https://www.npmjs.com/",
+    "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "repository": {

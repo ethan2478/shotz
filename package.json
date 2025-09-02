@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "pnpm -r run build",
-    "release": "pnpm -r publish --access public",
+    "release": "pnpm -r run release",
     "start:editor:demo": "pnpm --filter @shotz/image-editor-demo start",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx packages",
     "lint:style": "stylelint \"packages/**/*.{css,less}\"",
