@@ -7,10 +7,12 @@ export default defineConfig({
   resolve: {
     alias: {
       '@shotz/shared': path.resolve(__dirname, '../shared/src'),
+      '@components': path.resolve(__dirname, './src/components'),
     },
   },
   plugins: [
     dts({
+      rollupTypes: true,
       tsconfigPath: './tsconfig.build.json',
     }),
     react(),
@@ -25,7 +27,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // 不打包进库的依赖
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', 'react/jsx-runtime', /^@shotz\/shared/],
     },
   },
 });

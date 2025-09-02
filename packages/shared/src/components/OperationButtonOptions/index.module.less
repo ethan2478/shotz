@@ -1,0 +1,48 @@
+@import (reference) '@styles/variable.less';
+@import (reference) '@styles/mixins.less';
+
+.operationButtonOptions {
+  position: fixed;
+  left: 0;
+  top: 0;
+  will-change: transform;
+  z-index: var(--shotz-react-image-editor-zIndex, 1000);
+  font-family: @font-family;
+
+  .content-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    .theme-prop(border-color, @light-primary-color, @dark-primary-color);
+    .theme-prop(background, linear-gradient(90deg, #f5f6f7 0%, #fff 100%), linear-gradient(90deg, #292929 0%, #2D2D2D 100%));
+
+    overflow: hidden;
+  }
+
+  .option-arrow {
+    position: absolute;
+    width: 0;
+    border: 6px solid transparent;
+  }
+
+  &[data-placement='top'] {
+    .option-arrow {
+      transform: translate(-50%, -1px);
+      top: 100%;
+      left: 50%;
+      .theme-prop(border-top-color, @light-primary-color, @dark-primary-color);
+    }
+  }
+
+  &[data-placement='bottom'] {
+    .option-arrow {
+      transform: translate(-50%, 1px);
+      bottom: 100%;
+      left: 50%;
+      .theme-prop(border-bottom-color, @light-primary-color, @dark-primary-color);
+    }
+  }
+}

@@ -108,6 +108,9 @@ importers:
       '@shotz/editor':
         specifier: workspace:*
         version: link:../../editor
+      '@shotz/shared':
+        specifier: workspace:*
+        version: link:../../shared
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -155,6 +158,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^5.0.2
         version: 5.0.2(vite@6.3.5(@types/node@24.3.0)(jiti@2.5.1)(less@4.4.1)(yaml@2.8.1))
+      fs-extra:
+        specifier: ^11.3.1
+        version: 11.3.1
       less:
         specifier: ^4.4.1
         version: 4.4.1
@@ -170,6 +176,9 @@ importers:
       vite-plugin-dts:
         specifier: ^4.5.4
         version: 4.5.4(@types/node@24.3.0)(rollup@4.49.0)(typescript@5.9.2)(vite@6.3.5(@types/node@24.3.0)(jiti@2.5.1)(less@4.4.1)(yaml@2.8.1))
+      vite-plugin-style-inject:
+        specifier: ^0.0.1
+        version: 0.0.1(vite@6.3.5(@types/node@24.3.0)(jiti@2.5.1)(less@4.4.1)(yaml@2.8.1))
 
 packages:
 
@@ -2862,6 +2871,11 @@ packages:
     peerDependenciesMeta:
       vite:
         optional: true
+
+  vite-plugin-style-inject@0.0.1:
+    resolution: {integrity: sha512-VsaBOb8ozMQn3kpMt4gIcyNt4BRMQ3Cq30eLIBtq1CH8U6iB1FnxVYspwITzJdXbMQA61QhyAx9QnNLwVRbDlg==}
+    peerDependencies:
+      vite: ^2.0.0
 
   vite-tsconfig-paths@5.1.4:
     resolution: {integrity: sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w==}
@@ -6013,6 +6027,10 @@ snapshots:
       - '@types/node'
       - rollup
       - supports-color
+
+  vite-plugin-style-inject@0.0.1(vite@6.3.5(@types/node@24.3.0)(jiti@2.5.1)(less@4.4.1)(yaml@2.8.1)):
+    dependencies:
+      vite: 6.3.5(@types/node@24.3.0)(jiti@2.5.1)(less@4.4.1)(yaml@2.8.1)
 
   vite-tsconfig-paths@5.1.4(typescript@5.9.2)(vite@6.3.5(@types/node@24.3.0)(jiti@2.5.1)(less@4.4.1)(yaml@2.8.1)):
     dependencies:

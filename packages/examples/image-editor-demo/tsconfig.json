@@ -2,13 +2,18 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "noEmit": true,
-    "composite": true // 必须开启，才能作为 Project References 的子项目
+    "composite": true, // 必须开启，才能作为 Project References 的子项目
+    "paths": {
+      "@shotz/shared/*": ["../shared/lib/types/*"]
+    }
   },
   "include": ["src", "../../../global.d.ts"],
-  "exclude": ["dist", "node_modules"],
   "references": [
     {
       "path": "../../editor/tsconfig.build.json"
+    },
+    {
+      "path": "../../shared"
     }
   ]
 }

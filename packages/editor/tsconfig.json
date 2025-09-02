@@ -1,11 +1,15 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "outDir": "dist",
     "rootDir": "src",
     "noEmit": true,
-    "composite": true // 必须开启，才能作为 Project References 的子项目
+    "composite": true, // 必须开启，才能作为 Project References 的子项目
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@shotz/shared/*": ["../shared/lib/types/*"]
+    }
   },
   "include": ["src", "../../global.d.ts"],
   "references": [

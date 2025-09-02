@@ -15,10 +15,6 @@
     "isolatedModules": true, // 每个文件单独作为模块（适合构建工具，避免跨文件依赖）
     "resolveJsonModule": true, // 允许 import JSON 文件
     "allowSyntheticDefaultImports": true, // 允许从没有默认导出的包中默认导入
-    "noEmit": false, // 是否输出编译结果（false 表示会生成编译后的文件）
-    "paths": {
-      "@shotz/editor": ["packages/editor/src"],
-      "@shotz/shared": ["packages/shared/src"]
-    }
+    "noEmit": false // 是否输出编译结果（false 表示会生成编译后的文件）
   }
 }

@@ -6,7 +6,7 @@
   "module": "./lib/index.es.js",
   "types": "./lib/types/index.d.ts",
   "files": [
-    "dist"
+    "lib"
   ],
   "type": "module",
   "exports": {
@@ -16,7 +16,45 @@
       "require": "./lib/index.cjs.js",
       "default": "./lib/index.cjs.js"
     },
-    "./index.css": "./lib/index.css"
+    "./index.css": "./lib/index.css",
+    "./styles/*": "./lib/styles/*",
+    "./types": "./lib/types/types.d.ts",
+    "./components": {
+      "types": "./lib/types/components/index.d.ts",
+      "import": "./lib/components/index.es.js",
+      "require": "./lib/components/index.cjs.js",
+      "default": "./lib/components/index.cjs.js"
+    },
+    "./components/operations": {
+      "types": "./lib/types/components/operations/index.d.ts",
+      "import": "./lib/components/operations/index.es.js",
+      "require": "./lib/components/operations/index.cjs.js",
+      "default": "./lib/components/operations/index.cjs.js"
+    },
+    "./constants": {
+      "types": "./lib/types/constants/index.d.ts",
+      "import": "./lib/constants/index.es.js",
+      "require": "./lib/constants/index.cjs.js",
+      "default": "./lib/constants/index.cjs.js"
+    },
+    "./context": {
+      "types": "./lib/types/context/index.d.ts",
+      "import": "./lib/context/index.es.js",
+      "require": "./lib/context/index.cjs.js",
+      "default": "./lib/context/index.cjs.js"
+    },
+    "./hooks": {
+      "types": "./lib/types/hooks/index.d.ts",
+      "import": "./lib/hooks/index.es.js",
+      "require": "./lib/hooks/index.cjs.js",
+      "default": "./lib/hooks/index.cjs.js"
+    },
+    "./utils": {
+      "types": "./lib/types/utils/index.d.ts",
+      "import": "./lib/utils/index.es.js",
+      "require": "./lib/utils/index.cjs.js",
+      "default": "./lib/utils/index.cjs.js"
+    }
   },
   "scripts": {
     "start": "vite",
@@ -24,6 +62,7 @@
     "build": "pnpm run clean && pnpm run build:vite",
     "build:tsc": "tsc",
     "build:vite": "vite build",
+    "publish": "pnpm publish --access public",
     "preview": "vite preview",
     "clean": "rimraf lib"
   },
@@ -45,6 +84,7 @@
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^5.0.2",
+    "fs-extra": "^11.3.1",
     "less": "^4.4.1",
     "rimraf": "^6.0.1",
     "typescript": "^5.9.2",

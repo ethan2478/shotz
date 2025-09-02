@@ -1,0 +1,249 @@
+import { useCallback, useRef, useState } from 'react';
+import useCanvasContextRef from '@hooks/useCanvasContextRef';
+import useCanvasMousedown from '@hooks/useCanvasMousedown';
+import useCanvasMousemove from '@hooks/useCanvasMousemove';
+import useCanvasMouseup from '@hooks/useCanvasMouseup';
+import useCursor from '@hooks/useCursor';
+import useDrawSelect from '@hooks/useDrawSelect';
+import useHistory from '@hooks/useHistory';
+import useLang from '@hooks/useLang';
+import useOperation from '@hooks/useOperation';
+import { OperationButton, SizeColor } from '@components';
+import { HistoryItemSource, HistoryItemEdit, HistoryItemType } from '@types';
+import { isHit, isHitCircle } from '@utils';
+import draw, {
+  getEditedRectangleData,
+  type RectangleData,
+  RectangleEditType,
+  type RectangleEditData,
+} from './draw';
+
+const Rectangle = () => {
+  const lang = useLang();
+  const [history, historyDispatcher] = useHistory();
+  const [operation, operationDispatcher] = useOperation();
+  const [, cursorDispatcher] = useCursor();
+  const canvasContextRef = useCanvasContextRef();
+  const canvasPanelCtx = canvasContextRef.current?.panelCtx;
+  const [size, setSize] = useState(3);
+  const [color, setColor] = useState('#ee5126');
+  const rectangleRef = useRef<HistoryItemSource<
+    RectangleData,
+    RectangleEditData
+  > | null>(null);
+  const rectangleEditRef = useRef<HistoryItemEdit<
+    RectangleEditData,
+    RectangleData
+  > | null>(null);
+
+  const checked = operation === 'Rectangle';
+
+  const selectRectangle = useCallback(() => {
+    operationDispatcher.set('Rectangle');
+    cursorDispatcher.set('crosshair');
+  }, [operationDispatcher, cursorDispatcher]);
+
+  const deselectRectangle = useCallback(() => {
+    operationDispatcher.reset();
+    cursorDispatcher.reset();
+  }, [operationDispatcher, cursorDispatcher]);
+
+  const onSelectRectangle = useCallback(() => {
+    if (checked) {
+      deselectRectangle();
+      return;
+    }
+
+    selectRectangle();
+    historyDispatcher.clearSelect();
+  }, [checked, selectRectangle, historyDispatcher, deselectRectangle]);
+
+  const onDrawSelect = useCallback(
+    (action: HistoryItemSource<unknown, unknown>, e: MouseEvent) => {
+      if (action.name !== 'Rectangle' || !canvasPanelCtx) {
+        return;
+      }
+
+      const source = action as HistoryItemSource<
+        RectangleData,
+        RectangleEditData
+      >;
+      selectRectangle();
+
+      const { x1, y1, x2, y2 } = getEditedRectangleData(source);
+
+      let type = RectangleEditType.Move;
+      if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: (x1 + x2) / 2,
+          y: y1,
+        })
+      ) {
+        type = RectangleEditType.ResizeTop;
+      } else if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: x2,
+          y: y1,
+        })
+      ) {
+        type = RectangleEditType.ResizeRightTop;
+      } else if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: x2,
+          y: (y1 + y2) / 2,
+        })
+      ) {
+        type = RectangleEditType.ResizeRight;
+      } else if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: x2,
+          y: y2,
+        })
+      ) {
+        type = RectangleEditType.ResizeRightBottom;
+      } else if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: (x1 + x2) / 2,
+          y: y2,
+        })
+      ) {
+        type = RectangleEditType.ResizeBottom;
+      } else if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: x1,
+          y: y2,
+        })
+      ) {
+        type = RectangleEditType.ResizeLeftBottom;
+      } else if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: x1,
+          y: (y1 + y2) / 2,
+        })
+      ) {
+        type = RectangleEditType.ResizeLeft;
+      } else if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: x1,
+          y: y1,
+        })
+      ) {
+        type = RectangleEditType.ResizeLeftTop;
+      }
+
+      rectangleEditRef.current = {
+        type: HistoryItemType.Edit,
+        data: {
+          type,
+          x1: e.clientX,
+          y1: e.clientY,
+          x2: e.clientX,
+          y2: e.clientY,
+        },
+        source: action as HistoryItemSource<RectangleData, RectangleEditData>,
+      };
+
+      historyDispatcher.select(action);
+    },
+    [canvasPanelCtx, selectRectangle, historyDispatcher],
+  );
+
+  const onMousedown = useCallback(
+    (e: MouseEvent) => {
+      if (!checked || !canvasPanelCtx || rectangleRef.current) {
+        return;
+      }
+
+      const { left, top } = canvasPanelCtx.canvas.getBoundingClientRect();
+      const x = e.clientX - left;
+      const y = e.clientY - top;
+
+      rectangleRef.current = {
+        name: 'Rectangle',
+        type: HistoryItemType.Source,
+        data: {
+          size,
+          color,
+          x1: x,
+          y1: y,
+          x2: x,
+          y2: y,
+        },
+        editHistory: [],
+        draw,
+        isHit,
+      };
+    },
+    [checked, size, color, canvasPanelCtx],
+  );
+
+  const onMousemove = useCallback(
+    (e: MouseEvent) => {
+      if (!checked || !canvasPanelCtx) {
+        return;
+      }
+
+      if (rectangleEditRef.current) {
+        rectangleEditRef.current.data.x2 = e.clientX;
+        rectangleEditRef.current.data.y2 = e.clientY;
+        if (history.top !== rectangleEditRef.current) {
+          rectangleEditRef.current.source.editHistory.push(
+            rectangleEditRef.current,
+          );
+          historyDispatcher.push(rectangleEditRef.current);
+        } else {
+          historyDispatcher.set(history);
+        }
+      } else if (rectangleRef.current) {
+        const { left, top } = canvasPanelCtx.canvas.getBoundingClientRect();
+        const rectangleData = rectangleRef.current.data;
+        rectangleData.x2 = e.clientX - left;
+        rectangleData.y2 = e.clientY - top;
+
+        if (history.top !== rectangleRef.current) {
+          historyDispatcher.push(rectangleRef.current);
+        } else {
+          historyDispatcher.set(history);
+        }
+      }
+    },
+    [checked, canvasPanelCtx, history, historyDispatcher],
+  );
+
+  const onMouseup = useCallback(() => {
+    if (!checked) {
+      return;
+    }
+
+    if (rectangleRef.current) {
+      historyDispatcher.clearSelect();
+    }
+
+    rectangleRef.current = null;
+    rectangleEditRef.current = null;
+  }, [checked, historyDispatcher]);
+
+  useDrawSelect(onDrawSelect);
+  useCanvasMousedown(onMousedown);
+  useCanvasMousemove(onMousemove);
+  useCanvasMouseup(onMouseup);
+
+  return (
+    <OperationButton
+      title={lang.operation_rectangle_title}
+      icon="icon-stroke-thin-Rectangle"
+      checked={checked}
+      onClick={onSelectRectangle}
+      option={
+        <SizeColor
+          size={size}
+          color={color}
+          onSizeChange={setSize}
+          onColorChange={setColor}
+        />
+      }
+    />
+  );
+};
+
+export default Rectangle;

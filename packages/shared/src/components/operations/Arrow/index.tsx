@@ -1,0 +1,199 @@
+import { useCallback, useRef, useState } from 'react';
+import { OperationButton, SizeColor } from '@components';
+import useCanvasMousedown from '@hooks/useCanvasMousedown';
+import useCanvasMousemove from '@hooks/useCanvasMousemove';
+import useCanvasMouseup from '@hooks/useCanvasMouseup';
+import {
+  type HistoryItemEdit,
+  type HistoryItemSource,
+  HistoryItemType,
+} from '@types';
+import useCursor from '@hooks/useCursor';
+import useOperation from '@hooks/useOperation';
+import useHistory from '@hooks/useHistory';
+import useCanvasContextRef from '@hooks/useCanvasContextRef';
+import { isHit, isHitCircle } from '@utils';
+import useDrawSelect from '@hooks/useDrawSelect';
+import useLang from '@hooks/useLang';
+import draw, {
+  getEditedArrowData,
+  type ArrowData,
+  ArrowEditType,
+  type ArrowEditData,
+} from './draw';
+
+const Arrow = () => {
+  const lang = useLang();
+  const [, cursorDispatcher] = useCursor();
+  const [operation, operationDispatcher] = useOperation();
+  const [history, historyDispatcher] = useHistory();
+  const canvasContextRef = useCanvasContextRef();
+  const canvasPanelCtx = canvasContextRef.current?.panelCtx;
+  const [size, setSize] = useState(3);
+  const [color, setColor] = useState('#ee5126');
+  const arrowRef = useRef<HistoryItemSource<ArrowData, ArrowEditData> | null>(
+    null,
+  );
+  const arrowEditRef = useRef<HistoryItemEdit<ArrowEditData, ArrowData> | null>(
+    null,
+  );
+
+  const checked = operation === 'Arrow';
+
+  const selectArrow = useCallback(() => {
+    operationDispatcher.set('Arrow');
+    cursorDispatcher.set('default');
+  }, [operationDispatcher, cursorDispatcher]);
+
+  const deselectArrow = useCallback(() => {
+    operationDispatcher.reset();
+    cursorDispatcher.reset();
+  }, [operationDispatcher, cursorDispatcher]);
+
+  const onSelectArrow = useCallback(() => {
+    if (checked) {
+      deselectArrow();
+      return;
+    }
+
+    selectArrow();
+    historyDispatcher.clearSelect();
+  }, [checked, selectArrow, historyDispatcher, deselectArrow]);
+
+  const onDrawSelect = useCallback(
+    (action: HistoryItemSource<unknown, unknown>, e: MouseEvent) => {
+      if (action.name !== 'Arrow' || !canvasPanelCtx) {
+        return;
+      }
+
+      const source = action as HistoryItemSource<ArrowData, ArrowEditData>;
+      selectArrow();
+
+      const { x1, y1, x2, y2 } = getEditedArrowData(source);
+      let type = ArrowEditType.Move;
+      if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: x1,
+          y: y1,
+        })
+      ) {
+        type = ArrowEditType.MoveStart;
+      } else if (
+        isHitCircle(canvasPanelCtx.canvas, e, {
+          x: x2,
+          y: y2,
+        })
+      ) {
+        type = ArrowEditType.MoveEnd;
+      }
+
+      arrowEditRef.current = {
+        type: HistoryItemType.Edit,
+        data: {
+          type,
+          x1: e.clientX,
+          y1: e.clientY,
+          x2: e.clientX,
+          y2: e.clientY,
+        },
+        source,
+      };
+
+      historyDispatcher.select(action);
+    },
+    [canvasPanelCtx, selectArrow, historyDispatcher],
+  );
+
+  const onMousedown = useCallback(
+    (e: MouseEvent) => {
+      if (!checked || arrowRef.current || !canvasPanelCtx) {
+        return;
+      }
+
+      const { left, top } = canvasPanelCtx.canvas.getBoundingClientRect();
+      arrowRef.current = {
+        name: 'Arrow',
+        type: HistoryItemType.Source,
+        data: {
+          size,
+          color,
+          x1: e.clientX - left,
+          y1: e.clientY - top,
+          x2: e.clientX - left,
+          y2: e.clientY - top,
+        },
+        editHistory: [],
+        draw,
+        isHit,
+      };
+    },
+    [checked, color, size, canvasPanelCtx],
+  );
+
+  const onMousemove = useCallback(
+    (e: MouseEvent) => {
+      if (!checked || !canvasPanelCtx) {
+        return;
+      }
+      if (arrowEditRef.current) {
+        arrowEditRef.current.data.x2 = e.clientX;
+        arrowEditRef.current.data.y2 = e.clientY;
+        if (history.top !== arrowEditRef.current) {
+          arrowEditRef.current.source.editHistory.push(arrowEditRef.current);
+          historyDispatcher.push(arrowEditRef.current);
+        } else {
+          historyDispatcher.set(history);
+        }
+      } else if (arrowRef.current) {
+        const { left, top } = canvasPanelCtx.canvas.getBoundingClientRect();
+
+        arrowRef.current.data.x2 = e.clientX - left;
+        arrowRef.current.data.y2 = e.clientY - top;
+
+        if (history.top !== arrowRef.current) {
+          historyDispatcher.push(arrowRef.current);
+        } else {
+          historyDispatcher.set(history);
+        }
+      }
+    },
+    [checked, history, canvasPanelCtx, historyDispatcher],
+  );
+
+  const onMouseup = useCallback(() => {
+    if (!checked) {
+      return;
+    }
+
+    if (arrowRef.current) {
+      historyDispatcher.clearSelect();
+    }
+
+    arrowRef.current = null;
+    arrowEditRef.current = null;
+  }, [checked, historyDispatcher]);
+
+  useDrawSelect(onDrawSelect);
+  useCanvasMousedown(onMousedown);
+  useCanvasMousemove(onMousemove);
+  useCanvasMouseup(onMouseup);
+
+  return (
+    <OperationButton
+      title={lang.operation_arrow_title}
+      icon="icon-stroke-thin-arrow"
+      checked={checked}
+      onClick={onSelectArrow}
+      option={
+        <SizeColor
+          size={size}
+          color={color}
+          onSizeChange={setSize}
+          onColorChange={setColor}
+        />
+      }
+    />
+  );
+};
+
+export default Arrow;

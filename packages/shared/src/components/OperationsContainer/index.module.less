@@ -1,0 +1,28 @@
+@import (reference) '@styles/variable.less';
+@import (reference) '@styles/mixins.less';
+
+.operations {
+  position: fixed;
+  left: 0;
+  top: 0;
+  will-change: transform;
+}
+
+.operationsButtons {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  .theme-prop(border-color, @light-primary-color, @dark-primary-color);
+  .theme-prop(background, linear-gradient(90deg, #f5f6f7 0%, #fff 100%), linear-gradient(90deg, #292929 0%, #2D2D2D 100%));
+
+  overflow: hidden;
+}
+
+.operationDivider {
+  flex: none;
+  width: 1px;
+  height: 16px;
+  .theme-prop(background-color, #ededed, @dark-primary-color);
+}

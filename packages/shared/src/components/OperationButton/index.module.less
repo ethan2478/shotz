@@ -1,0 +1,39 @@
+@import (reference) '@styles/variable.less';
+@import (reference) '@styles/mixins.less';
+
+.oprationButton {
+  flex: none;
+  width: @button-size;
+  height: @button-size;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #777;
+  cursor: pointer;
+
+  > .iconfont {
+    font-family: iconfont;
+    flex: none;
+    font-size: @button-size;
+    color: inherit;
+  }
+
+  &.checked {
+    .theme-prop(border-color, @light-primary-color, @dark-secondary-color);
+    .theme-prop(background-color, @light-primary-color, @dark-secondary-color);
+
+    box-shadow: 0 0 24px 0 rgb(0 0 0 / 10%);
+  }
+
+  &.checked,
+  &:not(.disabled):hover {
+    .theme-prop(color, #111, @light-primary-color);
+  }
+
+  &.disabled {
+    filter: opacity(0.6);
+    cursor: not-allowed;
+  }
+}

@@ -1,12 +1,26 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "outDir": "lib",
     "rootDir": "src",
     "composite": true,
     "declaration": true,
     "declarationDir": "lib/types",
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "noEmit": false,
+    "paths": {
+      "@types": ["src/types.ts"],
+      "@utils": ["src/utils"],
+      "@hooks": ["src/hooks"],
+      "@hooks/*": ["src/hooks/*"],
+      "@styles/*": ["src/styles/*"],
+      "@components": ["src/components"],
+      "@components/operations": ["src/components/operations"],
+      "@constants": ["src/constants"],
+      "@context": ["src/context"],
+      "@icons/*": ["src/icons/*"]
+    }
   },
   "include": ["src", "../../global.d.ts"]
 }

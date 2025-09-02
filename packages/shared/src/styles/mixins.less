@@ -1,0 +1,7 @@
+.theme-prop(@prop, @light, @dark) {
+  @{prop}: @light;
+
+  :root[data-shotz-theme='dark'] & {
+    @{prop}: @dark;
+  }
+}
