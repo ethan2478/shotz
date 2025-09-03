@@ -293,7 +293,7 @@ const Text = () => {
     <>
       <OperationButton
         title={lang.operation_text_title}
-        icon="icon-stroke-thin-text"
+        icon="icon-shotz-stroke-thin-text"
         checked={checked}
         onClick={onSelectText}
         option={

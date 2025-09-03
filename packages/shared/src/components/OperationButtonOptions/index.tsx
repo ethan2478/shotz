@@ -28,7 +28,7 @@ const OperationButtonOptions: React.FC<OperationButtonOptionsProps> = ({
   content,
   children,
 }) => {
-  const { currentOperationRef } = useOperationsContext();
+  const { currentOperationBtn } = useOperationsContext();
 
   const [placement, setPlacement] = useState<Placement>(Placement.Bottom);
   const [position, setPosition] = useState<Position | null>(null);
@@ -56,10 +56,10 @@ const OperationButtonOptions: React.FC<OperationButtonOptionsProps> = ({
   }, [open]);
 
   const updatePosition = useCallback(() => {
-    if (!open || !currentOperationRef.current || !contentRef.current) return;
+    if (!open || !currentOperationBtn || !contentRef.current) return;
 
     const currentOperationButtonRect =
-      currentOperationRef.current.getBoundingClientRect();
+      currentOperationBtn.getBoundingClientRect();
 
     // 视口宽高
     const vpWidth = document.documentElement.clientWidth;
@@ -104,7 +104,7 @@ const OperationButtonOptions: React.FC<OperationButtonOptionsProps> = ({
     setOffsetX(offset);
     setPlacement(vPlacement);
     setPosition({ x, y });
-  }, [currentOperationRef, open]);
+  }, [open, currentOperationBtn]);
 
   useEffect(() => {
     updatePosition();

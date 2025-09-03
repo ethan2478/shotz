@@ -31,7 +31,7 @@ const Ok = () => {
   return (
     <OperationButton
       title={lang.operation_ok_title}
-      icon="icon-stroke-thin-check"
+      icon="icon-shotz-stroke-thin-check"
       onClick={onClick}
     />
   );

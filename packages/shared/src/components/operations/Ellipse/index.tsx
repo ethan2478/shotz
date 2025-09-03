@@ -226,7 +226,7 @@ const Ellipse = () => {
   return (
     <OperationButton
       title={lang.operation_ellipse_title}
-      icon="icon-stroke-thin-ovel"
+      icon="icon-shotz-stroke-thin-ovel"
       checked={checked}
       onClick={onSelectEllipse}
       option={

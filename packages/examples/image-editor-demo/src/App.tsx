@@ -38,27 +38,29 @@ const App = () => {
   };
 
   return (
-    <div className="app-container">
-      <h1>React Image Editor Demo</h1>
-      <button
-        style={{
-          width: '100px',
-          height: '40px',
-          borderRadius: '8px',
-          cursor: 'pointer',
-          marginBottom: '16px',
-        }}
-        onClick={onChangeTheme}
-      >
-        更改主题
-      </button>
-      <ReactImageEditor
-        url={Pic}
-        onOk={onOK}
-        onCancel={onCancel}
-        onSave={onSave}
-        theme={theme}
-      />
+    <div className="app-wrapper">
+      <div className="app-container">
+        <h1>React Image Editor Demo</h1>
+        <button
+          style={{
+            width: '100px',
+            height: '40px',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            marginBottom: '16px',
+          }}
+          onClick={onChangeTheme}
+        >
+          更改主题
+        </button>
+        <ReactImageEditor
+          url={Pic}
+          onOk={onOK}
+          onCancel={onCancel}
+          onSave={onSave}
+          theme={theme}
+        />
+      </div>
     </div>
   );
 };

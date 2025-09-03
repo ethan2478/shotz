@@ -1,7 +1,10 @@
 import React from 'react';
 
 interface OperationsContextValue {
-  currentOperationRef: React.MutableRefObject<HTMLDivElement | undefined>;
+  currentOperationBtn?: HTMLDivElement;
+  setCurrentOperationBtn: React.Dispatch<
+    React.SetStateAction<HTMLDivElement | undefined>
+  >;
 }
 
 const OperationsContext = React.createContext<OperationsContextValue | null>(
@@ -23,13 +26,15 @@ export const useOperationsContext = () => {
 export const OperationsContextContainer: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const currentOperationRef = React.useRef<HTMLDivElement>();
+  const [currentOperationBtn, setCurrentOperationBtn] =
+    React.useState<HTMLDivElement>();
 
   const value = React.useMemo(
     () => ({
-      currentOperationRef,
+      currentOperationBtn,
+      setCurrentOperationBtn,
     }),
-    [currentOperationRef],
+    [currentOperationBtn],
   );
 
   return (

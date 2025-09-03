@@ -31,7 +31,7 @@ const Save = () => {
   return (
     <OperationButton
       title={lang.operation_save_title}
-      icon="icon-stroke-thin-saveas"
+      icon="icon-shotz-stroke-thin-saveas"
       onClick={onClick}
     />
   );

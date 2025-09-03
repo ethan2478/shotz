@@ -14,7 +14,7 @@ const Redo = () => {
   return (
     <OperationButton
       title={lang.operation_redo_title}
-      icon="icon-stroke-thin-forward"
+      icon="icon-shotz-stroke-thin-forward"
       disabled={
         !history.stack.length || history.stack.length - 1 === history.index
       }

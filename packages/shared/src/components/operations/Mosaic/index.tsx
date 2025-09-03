@@ -238,7 +238,7 @@ const Mosaic = () => {
   return (
     <OperationButton
       title={lang.operation_mosaic_title}
-      icon="icon-stroke-thin-mosaic"
+      icon="icon-shotz-stroke-thin-mosaic"
       checked={checked}
       onClick={onSelectMosaic}
       option={<Sizes value={size} onChange={setSize} />}

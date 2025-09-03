@@ -163,7 +163,7 @@ const Brush = () => {
   return (
     <OperationButton
       title={lang.operation_brush_title}
-      icon="icon-stroke-thin-draw"
+      icon="icon-shotz-stroke-thin-draw"
       checked={checked}
       onClick={onSelectBrush}
       option={

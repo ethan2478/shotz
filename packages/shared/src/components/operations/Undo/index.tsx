@@ -14,7 +14,7 @@ const Undo = () => {
   return (
     <OperationButton
       title={lang.operation_undo_title}
-      icon="icon-stroke-thin-quote"
+      icon="icon-shotz-stroke-thin-quote"
       disabled={history.index === -1}
       onClick={onClick}
     />

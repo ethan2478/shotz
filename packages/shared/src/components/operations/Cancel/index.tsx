@@ -17,7 +17,7 @@ export default function Cancel(): ReactElement {
   return (
     <OperationButton
       title={lang.operation_cancel_title}
-      icon="icon-stroke-thin-close"
+      icon="icon-shotz-stroke-thin-close"
       onClick={onClick}
     />
   );

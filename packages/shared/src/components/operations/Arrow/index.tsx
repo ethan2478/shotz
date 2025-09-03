@@ -181,7 +181,7 @@ const Arrow = () => {
   return (
     <OperationButton
       title={lang.operation_arrow_title}
-      icon="icon-stroke-thin-arrow"
+      icon="icon-shotz-stroke-thin-arrow"
       checked={checked}
       onClick={onSelectArrow}
       option={
