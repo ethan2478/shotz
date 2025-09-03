@@ -1,6 +1,6 @@
 {
   "name": "@shotz/editor",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A lightweight React image editor supporting crop, draw, text, mosaic, shapes, and download.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",

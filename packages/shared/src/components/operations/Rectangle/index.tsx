@@ -231,7 +231,7 @@ const Rectangle = () => {
   return (
     <OperationButton
       title={lang.operation_rectangle_title}
-      icon="icon-shotz-stroke-thin-Rectangle"
+      icon="icon-shotz-stroke-thin-rectangle"
       checked={checked}
       onClick={onSelectRectangle}
       option={

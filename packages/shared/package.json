@@ -1,6 +1,6 @@
 {
   "name": "@shotz/shared",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Shared React components, hooks, and utilities for Shotz editor and screenshot tools.",
   "main": "./lib/index.cjs.js",
   "module": "./lib/index.es.js",
@@ -83,6 +83,7 @@
   },
   "packageManager": "pnpm@10.9.0",
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^5.0.2",
