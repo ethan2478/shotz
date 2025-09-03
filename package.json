@@ -6,6 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "pnpm -r run build",
+    "version:patch": "pnpm -r run version:patch",
     "release": "pnpm -r run release",
     "start:editor:demo": "pnpm --filter @shotz/image-editor-demo start",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx packages",

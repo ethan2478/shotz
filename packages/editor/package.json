@@ -1,6 +1,6 @@
 {
   "name": "@shotz/editor",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A lightweight React image editor supporting crop, draw, text, mosaic, shapes, and download.",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.es.js",
@@ -24,6 +24,7 @@
     "build": "pnpm run clean && pnpm run build:vite",
     "build:tsc": "tsc -p tsconfig.build.json",
     "build:vite": "vite build",
+    "version:patch": "pnpm version patch --no-workspaces-update",
     "release": "pnpm publish --access public",
     "yalc:publish": "yalc publish",
     "preview": "vite preview",

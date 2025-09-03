@@ -1,6 +1,6 @@
 {
   "name": "@shotz/shared",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Shared React components, hooks, and utilities for Shotz editor and screenshot tools.",
   "main": "./lib/index.cjs.js",
   "module": "./lib/index.es.js",
@@ -62,6 +62,7 @@
     "build": "pnpm run clean && pnpm run build:vite",
     "build:tsc": "tsc",
     "build:vite": "vite build",
+    "version:patch": "pnpm version patch --no-workspaces-update",
     "release": "pnpm publish --access public",
     "yalc:publish": "yalc publish",
     "preview": "vite preview",

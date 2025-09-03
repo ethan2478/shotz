@@ -5,8 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "vite",
-    "build": "vite build"
+    "start": "vite"
   },
   "author": "Ethan",
   "license": "MIT",
