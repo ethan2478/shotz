@@ -124,12 +124,17 @@ export const composeImage = (ctx: CanvasRenderingContext2D): Promise<Blob> => {
       return reject(new Error('Canvas context is required'));
     }
 
-    ctx.canvas.toBlob(blob => {
-      if (!blob) {
-        return reject(new Error('Canvas to Blob failed'));
-      }
-      resolve(blob);
-    }, 'image/png');
+    try {
+      ctx.canvas.toBlob(blob => {
+        if (!blob) {
+          return reject(new Error('Canvas to Blob failed'));
+        }
+        resolve(blob);
+      }, 'image/png');
+    } catch (err) {
+      console.error('[@shotz/shared]Canvas to Blob Error==>', err);
+      return reject(err);
+    }
   });
 };
 

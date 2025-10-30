@@ -58,6 +58,7 @@ const ImageEditorBackground = React.forwardRef<HTMLImageElement>(
           src={url}
           onLoad={onLoad}
           style={imgStyle}
+          crossOrigin="anonymous"
         />
       </div>
     );
