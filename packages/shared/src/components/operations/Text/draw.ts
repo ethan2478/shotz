@@ -65,8 +65,10 @@ export default function draw(
     { x: 0, y: 0 },
   );
 
+  const lineHeight = sizes[finalSize] * 1.2;
+
   finalText.split('\n').forEach((item, index) => {
-    ctx.fillText(item, x + distance.x, y + distance.y + index * size);
+    ctx.fillText(item, x + distance.x, y + distance.y + index * lineHeight);
   });
 }
 
@@ -100,7 +102,7 @@ export function isHit(
     if (width < measured.width) {
       width = measured.width;
     }
-    height += sizes[finalSize];
+    height += sizes[finalSize] * 1.2;
   });
 
   const distance = action.editHistory.reduce(
